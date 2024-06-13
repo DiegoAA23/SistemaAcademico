@@ -10,10 +10,10 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
+    <link href="./output.css" rel="stylesheet">,
     <!-- Styles -->
     <style>
-        <link href="./output.css" rel="stylesheet">,
+
         ::after,
         ::before {
             box-sizing: border-box;
@@ -136,7 +136,6 @@
         [type=reset],
         [type=submit],
         button {
-            -webkit-appearance: button;
             background-color: transparent;
             background-image: none
         }
@@ -159,7 +158,6 @@
         }
 
         [type=search] {
-            -webkit-appearance: textfield;
             outline-offset: -2px
         }
 
@@ -241,7 +239,6 @@
         svg,
         video {
             display: block;
-            vertical-align: middle
         }
 
         img,
