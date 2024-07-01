@@ -15,12 +15,11 @@
                             <div>
                                 <label for="comboboxclase" class="block text-sm font-medium text-white">Selecciona la Clase:</label>
                                 <select id="comboboxclase" name="comboboxclase" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                    <option>Clase 1</option>
-                                    <option>Clase 2</option>
-                                    <option>Clase 3</option>
+                                    @foreach ($lista as $lt)
+                                    <option>{{ $lt->nombre_clase}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                          
                             <div>
                                 <x-labelWhite for="aula" :value="'Aula:'"></x-labelWhite>
                                 <x-inputWhite class="block mt-1 w-full" type="text" name="aula"
@@ -32,7 +31,6 @@
                                 <x-inputWhite class="block mt-1 w-full" type="text" name="dias"
                                             value="{{ auth()->user()->dias }}" required maxlength="6" minlength="1" autofocus></x-inputWhite>
                             </div>
-                        
                             <div>
                             <label for="fechaInicio" class="block text-sm font-medium text-white">Selecciona Fecha de Inicio:</label>
                             <input id="fechaInicio" name="fechaInicio" type="date" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
