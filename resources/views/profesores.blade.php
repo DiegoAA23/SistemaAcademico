@@ -18,7 +18,7 @@
                                               value="{{ auth()->user()->periodo }}" required autofocus></x-inputWhite>
                             </div>
 
-                            <div>
+                          <div>
                                 <x-labelWhite for="nombreDocente" :value="'Nombres:'"></x-labelWhite>
                                 <x-inputWhite class="block mt-1 w-full" type="text" name="nombreDocente"
                                             value="{{ auth()->user()->clase1 }}" required maxlength="50" minlength="4" autofocus></x-inputWhite>

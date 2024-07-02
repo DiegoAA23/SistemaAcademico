@@ -8,6 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6 lg:p-8">
+               
                 <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
 
                     <div class="mb-4">
@@ -61,6 +62,9 @@
                         </tbody>
                     </table>
                 </div>
+                <x-buttonWhite class=" mb-2 mt-8">
+                    <a href="/imprimir-profesores">DESCARGAR LISTADO</a>
+                </x-buttonWhite>
             </div>
         </div>
     </div>

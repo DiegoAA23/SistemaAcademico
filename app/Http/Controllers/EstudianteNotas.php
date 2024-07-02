@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class EstudianteNotas extends Controller
 {
@@ -28,6 +29,7 @@ class EstudianteNotas extends Controller
         }*/
     }
 
+    private $idest;
     public function obtenerEstudiante()
     {
         $estudiante = DB::table('estudiantes')->where('id_estudiante', 2)->first();
@@ -37,6 +39,7 @@ class EstudianteNotas extends Controller
         }
 
         $id = $estudiante->id_estudiante;
+        $this->idest = $id;
 
         return redirect()->route('estudcalificaciones.id', ['id' => $id]);
     }
@@ -48,11 +51,35 @@ class EstudianteNotas extends Controller
         return view('estudcalificaciones', ['item' => $item]);
     }
 
+    public function imprimirNotas()
+    {
+        $this->obtenerEstudiante();
+        $id_estudiante = $this->idest;
+
+        $item = DB::table('notas')->where('id_estudiante', $id_estudiante)->get();
+
+        $pdf = PDF::loadView('estudCalificaciones', ['item' => $item]);
+
+        return $pdf->download('notas.pdf');
+    }
+
     public function notas_periodo($id)
     {
         $item = DB::table('notas_periodo')->where('id_estudiante', $id)->get();
 
         return view('historial', ['item' => $item]);
+    }
+
+    public function imprimirHistorial()
+    {
+        $this->obtenerEstudiante();
+        $id_estudiante = $this->idest;
+
+        $item = DB::table('notas_periodo')->where('id_estudiante', $id_estudiante)->get();
+
+        $pdf = PDF::loadView('historial', ['item' => $item]);
+
+        return $pdf->download('historial.pdf');
     }
 
     public function obtenerEstudiante2()

@@ -6,15 +6,18 @@ use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use App\Models\Estado;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class EstudianteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    private $idest;
     public function index()
     {
         $estudiantes = Estudiante::all();
+        $this->idest=$estudiantes;
         //nombre de la pantalla vista    la otra variable de arriba
         return view('estudiante.estudianteView', compact('estudiantes'));
     }
@@ -61,6 +64,16 @@ class EstudianteController extends Controller
         }
 
         return redirect()->route('estudianteView');
+    }
+
+    public function imprimirEstudiantes()
+    {
+        $this->index();
+        $estudiantes = $this->idest;
+
+        $pdf = PDF::loadView('estudiante.estudianteView',compact('estudiantes'))->setPaper('a3', 'landscape');
+
+        return $pdf->download('estudiantes.pdf');
     }
 
     /**

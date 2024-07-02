@@ -11,6 +11,13 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("¡BIENVENIDO!") }}
                 </div>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <?php
+                    $hoy = date('d/m/Y');?>
+                    <p>Hoy Es:
+                        <?php echo $hoy; ?>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

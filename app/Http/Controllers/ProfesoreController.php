@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Profesore;
 use App\Models\Estado;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class ProfesoreController extends Controller
 {
-
+    private $idest;
     public function index()
     {
         $profesores = Profesore::all();
+        $this->idest = $profesores;
         //nombre de la pantalla vista    la otra variable de arriba
         return view('profesor.profesorView', compact('profesores'));
     }
@@ -51,6 +53,16 @@ class ProfesoreController extends Controller
         }
 
         return redirect()->route('profesorView');
+    }
+
+    public function imprimirProfesores()
+    {
+        $this->index();
+        $profesores = $this->idest;
+
+        $pdf = PDF::loadView('profesor.profesorView',compact('profesores'))->setPaper('a3', 'landscape');
+
+        return $pdf->download('profesores.pdf');
     }
 
     public function show(string $id)

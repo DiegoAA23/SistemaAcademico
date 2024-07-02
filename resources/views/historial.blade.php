@@ -12,6 +12,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="w-full max-w-md mx-auto bg-gray-800 p-4 rounded-lg shadow-md">
+                    <x-buttonWhite class="ml-3 mb-6 mt-2">
+                        <a href="/imprimir-historial">DESCARGAR HISTORIAL</a>
+                    </x-buttonWhite>
                                 @foreach ($item as $it)
                                 @if ($it->periodo !== $tmpPer)
                                     @php

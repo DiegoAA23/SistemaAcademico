@@ -6,10 +6,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EstudianteNotas;
 use App\Http\Controllers\ProfesoreController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\NivelesUsuario;
+use Barryvdh\DomPDF\Facade\PDF;
 
 Route::get('/', function () {
     return view('/auth/login');
 });
+/*
+Route::get('/imprimir-pdf', function(){
+    $pdf = PDF::loadView('estudCalificaciones');
+    return $pdf->download('dashboard.pdf');
+});*/
 
 /*Route::get('/dashboard', function () {
     return view('dashboard');
@@ -23,12 +30,17 @@ Route::group(['middleware' => 'auth'], function () {
     //mandar a la vista de las clases (formulario)
     //Route::view('clases', 'clases')->name('clases');
 });
+Route::get('/imprimir-notas', [EstudianteNotas::class, 'imprimirNotas']);
+Route::get('/imprimir-historial', [EstudianteNotas::class, 'imprimirHistorial']);
+Route::get('/imprimir-profesores', [ProfesoreController::class, 'imprimirProfesores']);
+Route::get('/imprimir-estudiantes', [EstudianteController::class, 'imprimirEstudiantes']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('obtenerEstudiante', [EstudianteNotas::class, 'obtenerEstudiante'])->name('obtenerEstudiante');
+    //Route::get('layouts/app', [NivelesUsuario::class, 'index'])->name('layouts/app');
     Route::get('obtenerEstudiante2', [EstudianteNotas::class, 'obtenerEstudiante2'])->name('obtenerEstudiante2');
     Route::get('estudcalificaciones/{id}', [EstudianteNotas::class, 'notas'])->name('estudcalificaciones.id');
     Route::get('historial/{id}', [EstudianteNotas::class, 'notas_periodo'])->name('historial.id');
