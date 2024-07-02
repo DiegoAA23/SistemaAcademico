@@ -60,7 +60,7 @@ class ProfesoreController extends Controller
         $this->index();
         $profesores = $this->idest;
 
-        $pdf = PDF::loadView('profesor.profesorView',compact('profesores'))->setPaper('a3', 'landscape');
+        $pdf = PDF::loadView('profesor.profesorView', compact('profesores'))->setPaper('a3', 'landscape');
 
         return $pdf->download('profesores.pdf');
     }

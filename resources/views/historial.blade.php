@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl mt-6 text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Historial Academico') }}
         </h2>
     </x-slot>
@@ -11,8 +11,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="w-full max-w-md mx-auto bg-gray-800 p-4 rounded-lg shadow-md">
-                    <x-buttonWhite class="ml-3 mb-6 mt-2">
+                <div>
+                    <x-buttonWhite class="ml-4 mb-6 mt-6">
                         <a href="/imprimir-historial">DESCARGAR HISTORIAL</a>
                     </x-buttonWhite>
                                 @foreach ($item as $it)

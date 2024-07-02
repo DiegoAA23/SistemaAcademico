@@ -15,10 +15,11 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Inicio') }}
                     </x-nav-link>
                 </div>
 
+                <!-- P & E -->
                 @if ($usuario == 3)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('registrarCalificaciones')" :active="request()->routeIs('registrarCalificaciones')">
@@ -44,6 +45,7 @@
                 </div>
                 @endif
 
+                <!-- PROFESOR -->
                 @if ($usuario == 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('registrarCalificaciones')" :active="request()->routeIs('registrarCalificaciones')">
@@ -53,6 +55,7 @@
 
                 @endif
 
+                <!-- ESTUDIANTE -->
                 @if ($usuario == 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('obtenerEstudiante2') }}">
@@ -73,6 +76,7 @@
                 </div>
                 @endif
 
+                <!-- ADMINISTRADOR -->
                 @if ($usuario == 0)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('profesorView')" :active="request()->routeIs('profesorView')">
@@ -87,13 +91,13 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('clases')" :active="request()->routeIs('clases')">
+                    <x-nav-link :href="route('claseView')" :active="request()->routeIs('claseView')">
                         {{ __('Clases') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('horarios')" :active="request()->routeIs('horarios')">
+                    <x-nav-link :href="route('horarioView')" :active="request()->routeIs('horarioView')">
                         {{ __('Horarios') }}
                     </x-nav-link>
                 </div>
@@ -105,7 +109,7 @@
                 </div>
                 @endif
 <!-- Settings Dropdown -->
-                
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -132,7 +136,7 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
                         <!--Agregar Clases al combobox o menu desplegable-->
-                       
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -179,37 +183,9 @@
 
             <div class="mt-3 space-y-1">
                 <!--Clases menu desplegable responsibe opcion-->
-                <x-responsive-nav-link :href="route('clases')">
-                    {{ __('Registrar Clases') }}
-                </x-responsive-nav-link>
+              
 
-                <x-responsive-nav-link :href="route('profesores')">
-                    {{ __('Registrar Docentes') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('asignacionClasedocente')">
-                    {{ __('Asignacion de Clase a Docente') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('estudiantes')">
-                    {{ __('Registrar Estudiantes') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('historial')">
-                    {{ __('Historial Académico') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('horarios')">
-                    {{ __('Registrar Horarios') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('matricula')">
-                    {{ __('Matricula') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('registrarCalificaciones')">
-                    {{ __('Asignar Calificaciones') }}
-                </x-responsive-nav-link>
+              
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">

@@ -23,5 +23,9 @@ class Profesore extends Model
     {
         return $this->belongsTo(Estado::class, 'estado_id');
     }
-    
+
+    public function profesor()
+    {
+        return $this->belongsTo(Profesore::class, 'id_profesor');
+    }
 }

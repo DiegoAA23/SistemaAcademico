@@ -17,7 +17,7 @@ class EstudianteController extends Controller
     public function index()
     {
         $estudiantes = Estudiante::all();
-        $this->idest=$estudiantes;
+        $this->idest = $estudiantes;
         //nombre de la pantalla vista    la otra variable de arriba
         return view('estudiante.estudianteView', compact('estudiantes'));
     }
@@ -71,7 +71,7 @@ class EstudianteController extends Controller
         $this->index();
         $estudiantes = $this->idest;
 
-        $pdf = PDF::loadView('estudiante.estudianteView',compact('estudiantes'))->setPaper('a3', 'landscape');
+        $pdf = PDF::loadView('estudiante.estudianteView', compact('estudiantes'))->setPaper('a3', 'landscape');
 
         return $pdf->download('estudiantes.pdf');
     }
@@ -140,5 +140,16 @@ class EstudianteController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('estudianteView')->with('error', 'Error al desactivar el estudiante: ' . $e->getMessage());
         }
+    }
+
+    public function matricularClases(Request $request)
+    {
+        $periodo = $request->query('periodo', 0);
+
+        return view('matricularClases', compact('periodo'));
+    }
+
+    public function guardarMatricula($id){
+        
     }
 }

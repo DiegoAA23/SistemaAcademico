@@ -39,5 +39,11 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('usuario', $tipo);
         });
+
+        View::composer('*', function ($view) {
+            if (!isset($view->periodo)) {
+                $view->with('periodo', 0);
+            }
+        });
     }
 }

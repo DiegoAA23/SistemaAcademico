@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 mt-6 mb-2 dark:text-gray-200 leading-tight">
             {{ __('Profesores') }}
         </h2>
     </x-slot>
@@ -8,7 +8,6 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6 lg:p-8">
-               
                 <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
 
                     <div class="mb-4">
@@ -62,9 +61,13 @@
                         </tbody>
                     </table>
                 </div>
-                <x-buttonWhite class=" mb-2 mt-8">
-                    <a href="/imprimir-profesores">DESCARGAR LISTADO</a>
-                </x-buttonWhite>
+                <div class="flex items-center justify-end mb-2 mt-8">
+                    <button class='inline-flex items-center px-4 py-2 bg-gray-700 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 active:bg-gray-900 focus:outline-none focus:bg-gray-600 focus:ring focus:ring-gray-400 focus:ring-opacity-50 disabled:opacity-25 transition ease-in-out duration-150'>
+                        <a href="/imprimir-profesores" class="text-white no-underline">
+                            DESCARGAR LISTADO
+                        </a>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

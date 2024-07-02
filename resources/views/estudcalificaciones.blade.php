@@ -1,6 +1,6 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+    <x-slot name="header" class="mt-6">
+        <h2 class="font-semibold text-xl mt-6 mb-2 text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Calificaciones') }}
         </h2>
     </x-slot>
@@ -10,8 +10,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-md mx-4">
-                    <x-buttonWhite class="ml-3 mb-6 mt-2">
-                        <a href="/imprimir-notas">DESCARGAR MATRICULA</a>
+                    <x-buttonWhite class="ml-3 mb-6 mt-6">
+                        <a href="/imprimir-notas">DESCARGAR BOLETA</a>
                     </x-buttonWhite>
                     <div class="w-full max-w-5xl bg-gray-800 p-8 rounded-lg shadow-md mx-4 border border-gray-700">
                         <div class="p-6 bg-gray-800 rounded-lg">
