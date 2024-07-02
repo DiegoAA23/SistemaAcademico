@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Aula;
 use Illuminate\Http\Request;
 use App\Models\Estado;
-
+use PDF;
 
 class AulaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    private $idest;
     public function index()
     {
         $aulas = Aula::all();
+        $this->idest = $aulas;
         return view('aula.aulaView', compact('aulas'));
     }
 
@@ -26,6 +28,15 @@ class AulaController extends Controller
         return view('aula.create');
     }
 
+    public function imprimirAulas()
+    {
+        $this->index();
+        $aulas = $this->idest;
+
+        $pdf = PDF::loadView('aula.aulaView', compact('aulas'))->setPaper('a3', 'landscape');
+
+        return $pdf->download('aulas.pdf');
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -34,18 +45,17 @@ class AulaController extends Controller
         $request->validate([
             'aula' => 'required|min:3|max:4',
         ]);
-    
+
         try {
 
             Aula::create([
                 'aula' => $request->aula,
                 'estado_id' => 1,
             ]);
-            
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
-    
+
         return redirect()->route('aulaView');
     }
 
@@ -75,11 +85,11 @@ class AulaController extends Controller
             'aula' => 'required|min:3|max:4',
             'estado_id' => 'required|min:1|max:1'
         ]);
-    
+
         try {
             $aula = Aula::findOrFail($id);
             $aula->update($request->all());
-    
+
             return redirect()->route('aulaView');
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -93,14 +103,13 @@ class AulaController extends Controller
     {
         try {
             $aula = Aula::findOrFail($id);
-    
-            if ($aula->estado_id == 1) { 
+
+            if ($aula->estado_id == 1) {
                 $aula->update(['estado_id' => 2]);
                 return redirect()->route('aulaView');
             } else {
                 return redirect()->route('aulaView');
             }
-            
         } catch (\Exception $e) {
             return redirect()->route('aulaView');
         }

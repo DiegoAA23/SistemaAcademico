@@ -9,6 +9,28 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-transparent dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black dark:text-black">
+
+                @if ($errors->any())
+                        <div class="bg-red-500 text-white p-4 rounded mb-4">
+                            <strong>Atención:</strong> Por favor, corrija los siguientes errores:
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="bg-green-500 text-white p-4 rounded mb-4">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="bg-red-500 text-white p-4 rounded mb-4">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('estudiantesC.update', $estudiante->id_estudiante) }}">
                         @csrf
                         @method('PUT')
@@ -32,7 +54,7 @@
                                 <label for="fecha_de_nacimiento"
                                     class="block text-sm font-medium text-white">Fecha de Nacimiento:</label>
                                 <input id="fecha_de_nacimiento" name="fecha_de_nacimiento" type="date" required
-                                    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400"
                                     value="{{ old('fecha_de_nacimiento', $estudiante->fecha_de_nacimiento) }}">
                             </div>
 
@@ -72,7 +94,7 @@
                             <div>
                                 <x-labelWhite for="estado" :value="'Estado:'" />
                                 <select name="estado_id" id="estado_id"
-                                    class="block mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-gray-500 dark:focus:border-gray-400">
+                                class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
                                     <option value="1" {{ $estudiante->estado_id == 1 ? 'selected' : '' }}>Activo
                                     </option>
                                     <option value="2" {{ $estudiante->estado_id == 2 ? 'selected' : '' }}>Inactivo
@@ -98,3 +120,17 @@
         </div>
     </div>
     </x-app-layout>
+
+    <script>
+        @if ($errors->any())
+            alertify.alert("Atención", "Por favor, corrija los siguientes errores:<br><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>");
+        @endif
+
+        @if (session('success'))
+            alertify.success("{{ session('success') }}");
+        @endif
+
+        @if (session('error'))
+            alertify.error("{{ session('error') }}");
+        @endif
+    </script>

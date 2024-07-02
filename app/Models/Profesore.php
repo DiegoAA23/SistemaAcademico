@@ -16,7 +16,7 @@ class Profesore extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'id_profesor', 'nombre', 'apellido', 'especialidad', 'correo_electronico', 'telefono', 'estado_id'
+        'id_profesor', 'nombre', 'apellido', 'id_especialidad', 'correo_electronico', 'telefono', 'estado_id'
     ];
 
     public function estado()
@@ -27,5 +27,10 @@ class Profesore extends Model
     public function profesor()
     {
         return $this->belongsTo(Profesore::class, 'id_profesor');
+    }
+
+    public function especialidad()
+    {
+        return $this->belongsTo(Especialidad::class, 'id_especialidad');
     }
 }

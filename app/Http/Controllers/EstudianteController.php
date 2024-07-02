@@ -21,10 +21,17 @@ class EstudianteController extends Controller
         //nombre de la pantalla vista    la otra variable de arriba
         return view('estudiante.estudianteView', compact('estudiantes'));
     }
+    public function imprimirEstudiantes()
+    {
+        $this->index();
+        $estudiantes = $this->idest;
 
-    /**
-     * Show the form for creating a new resource.
-     */
+        $pdf = PDF::loadView('estudiante.estudianteView', compact('estudiantes'))->setPaper('a3', 'landscape');
+
+        return $pdf->download('estudiantes.pdf');
+    }
+
+
     public function create()
     {
         return view('estudiante.create');
@@ -36,14 +43,14 @@ class EstudianteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_estudiante' => 'required|min:13|max:15',
-            'nombre' => 'required|string|min:3|max:50',
-            'apellido' => 'required|string|min:3|max:50',
-            'fecha_de_nacimiento' => 'required|date',
+            'id_estudiante' => 'required|min:13|max:15|unique:estudiantes,id_estudiante',
+            'nombre' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s]+$/u'],
+            'apellido' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s]+$/u'],
+            'fecha_de_nacimiento' => 'required|date|before:today',
             'genero' => 'required',
             'direccion' => 'required|string|min:3|max:100',
-            'telefono' => 'required|min:8|max:8',
-            'correo_electronico' => 'required|string|min:4|max:50',
+            'telefono' => 'required|min:8|max:8|unique:estudiantes,telefono',
+            'correo_electronico' => 'required|string|min:4|max:50|unique:estudiantes,correo_electronico',
         ]);
 
         // Crear registro en la base de datos
@@ -64,16 +71,6 @@ class EstudianteController extends Controller
         }
 
         return redirect()->route('estudianteView');
-    }
-
-    public function imprimirEstudiantes()
-    {
-        $this->index();
-        $estudiantes = $this->idest;
-
-        $pdf = PDF::loadView('estudiante.estudianteView', compact('estudiantes'))->setPaper('a3', 'landscape');
-
-        return $pdf->download('estudiantes.pdf');
     }
 
     /**
@@ -99,13 +96,13 @@ class EstudianteController extends Controller
     public function update(Request $request, $id_estudiante)
     {
         $request->validate([
-            'nombre' => 'required|string|min:3|max:50',
-            'apellido' => 'required|string|min:3|max:50',
-            'fecha_de_nacimiento' => 'required|date',
+            'nombre' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s]+$/u'],
+            'apellido' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s]+$/u'],
+            'fecha_de_nacimiento' => 'required|date|before:today',
             'genero' => 'required',
             'direccion' => 'required|string|min:3|max:100',
-            'telefono' => 'required|min:8|max:8',
-            'correo_electronico' => 'required|string|min:4|max:50',
+            'telefono' => 'required|min:8|max:8|unique:estudiantes,telefono,' . $id_estudiante . ',id_estudiante',
+            'correo_electronico' => 'required|string|min:4|max:50|unique:estudiantes,correo_electronico,' . $id_estudiante . ',id_estudiante',
         ]);
 
         try {
@@ -141,7 +138,6 @@ class EstudianteController extends Controller
             return redirect()->route('estudianteView')->with('error', 'Error al desactivar el estudiante: ' . $e->getMessage());
         }
     }
-
     public function matricularClases(Request $request)
     {
         $periodo = $request->query('periodo', 0);
@@ -149,7 +145,7 @@ class EstudianteController extends Controller
         return view('matricularClases', compact('periodo'));
     }
 
-    public function guardarMatricula($id){
-        
+    public function guardarMatricula($id)
+    {
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\ClasesController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\AulaController;
+use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\NivelesUsuario;
 
 Route::get('/', function () {
@@ -32,6 +33,8 @@ Route::get('/imprimir-profesores', [ProfesoreController::class, 'imprimirProfeso
 Route::get('/imprimir-estudiantes', [EstudianteController::class, 'imprimirEstudiantes']);
 Route::get('/imprimir-clases', [ClasesController::class, 'imprimirClases']);
 Route::get('/imprimir-horarios', [HorarioController::class, 'imprimirHorarios']);
+Route::get('/imprimir-aulas', [AulaController::class, 'imprimirAulas']);
+Route::get('/imprimir-especialidades', [EspecialidadController::class, 'imprimirEspecialidades']);
 
 Route::middleware('auth')->group(function () {
 
@@ -80,6 +83,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/estudiante/create', [EstudianteController::class, 'create'])->name('estudianteCreate');
     Route::get('/estudiante/edit/{id}', [EstudianteController::class, 'edit'])->name('estudianteEdit');
     Route::resource('estudiantesC', EstudianteController::class);
+
+    //RUTAS DE ESPECIALIDADES
+    Route::get('/especialidad/aulaView', [EspecialidadController::class, 'index'])->name('especialidadView');
+    Route::get('/especialidad/create', [EspecialidadController::class, 'create'])->name('especialidadCreate');
+    Route::get('/especialidad/edit/{id}', [EspecialidadController::class, 'edit'])->name('especialidadEdit');
+    Route::resource('especialidadesC', EspecialidadController::class);
+
 
     //RUTAS ASIGNACION CLASES
     Route::get('asignacionClasedocente', [EstudianteNotas::class, 'clases_profesores'])->name('asignacionClasedocente');

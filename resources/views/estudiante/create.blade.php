@@ -9,12 +9,34 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-transparent dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black dark:text-black">
+
+                @if ($errors->any())
+                        <div class="bg-red-500 text-white p-4 rounded mb-4">
+                            <strong>Atención:</strong> Por favor, corrija los siguientes errores:
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="bg-green-500 text-white p-4 rounded mb-4">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="bg-red-500 text-white p-4 rounded mb-4">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('estudiantesC.store') }}">
                         @csrf
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <x-labelWhite for="id_estudiante" :value="'ID:'"></x-labelWhite>
-                                <x-inputWhite class="block mt-1 w-full" type="number" name="id_estudiante"
+                                <x-inputWhite class="block mt-1 w-full" type="number" name="id_estudiante"  value="{{ old('id_estudiante') }}"
                                               required autofocus></x-inputWhite>
                             </div>
 
@@ -30,12 +52,15 @@
 
                             <div>
                                 <label for="fecha_de_nacimiento" class="block text-sm font-medium text-white">Fecha de Nacimiento:</label>
-                                <input id="fecha_de_nacimiento" name="fecha_de_nacimiento" type="date" value="{{ old('fecha_de_nacimiento') }}" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <input id="fecha_de_nacimiento" name="fecha_de_nacimiento" type="date" value="{{ old('fecha_de_nacimiento') }}" required 
+                                class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
                             </div>
 
                             <div>
                                 <x-labelWhite for="genero" :value="'Género:'" />
-                                <select name="genero" id="genero" class="block mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-gray-500 dark:focus:border-gray-400">
+                                <select name="genero" id="genero" 
+                                class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
+                                
                                     <option value="Femenino">Femenino</option>
                                     <option value="Masculino">Masculino</option>
                                 </select>
@@ -74,3 +99,17 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+        @if ($errors->any())
+            alertify.alert("Atención", "Por favor, corrija los siguientes errores:<br><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>");
+        @endif
+
+        @if (session('success'))
+            alertify.success("{{ session('success') }}");
+        @endif
+
+        @if (session('error'))
+            alertify.error("{{ session('error') }}");
+        @endif
+    </script>

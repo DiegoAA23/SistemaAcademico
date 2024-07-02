@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Ingresar Cursos') }}
+            {{ __('Ingresar Especialidad') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-transparent dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black dark:text-black">
-
                 @if ($errors->any())
                         <div class="bg-red-500 text-white p-4 rounded mb-4">
                             <strong>Atención:</strong> Por favor, corrija los siguientes errores:
@@ -31,31 +30,17 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('clasesC.store') }}">
+                    <form method="POST" action="{{ route('especialidadesC.store') }}">
                         @csrf
+
                         <div class="grid grid-cols-2 gap-6">
                             <div>
-                                <x-labelWhite for="nombre_clase" :value="'Clase:'" />
-                                <x-inputWhite class="block mt-1 w-full" type="text" name="nombre_clase" value="{{ old('nombre_clase') }}" required maxlength="50" minlength="4" autofocus />
-                            </div>
-
-                            <div>
-                                <x-labelWhite for="id_profesor" :value="'Profesor:'" />
-                                <select id="id_profesor" name="id_profesor" required
-                                    class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                                    @foreach($profesores as $profesor)
-                                        <option value="{{ $profesor->id_profesor }}" {{ old('id_profesor') == $profesor->id_profesor ? 'selected' : '' }}>
-                                            {{ $profesor->nombre }} {{ $profesor->apellido }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div>
-                                <x-labelWhite for="periodo" :value="'Periodo:'" />
-                                <x-inputWhite class="block mt-1 w-full" type="number" name="periodo" value="{{ old('periodo') }}" required autofocus />
+                                <x-labelWhite for="especialidad" :value="'Especialidad:'"></x-labelWhite>
+                                <x-inputWhite class="block mt-1 w-full" type="text" name="especialidad" required maxlength="50" minlength="4"
+                                value="{{ old('especialidad') }}" autofocus></x-inputWhite>
                             </div>
                         </div>
+                        
 
                         <div class="flex items-center justify-end mt-4">
                             <x-buttonWhite type="submit">
@@ -63,7 +48,7 @@
                             </x-buttonWhite>
                             <pre> </pre>
                             <!-- Botón de cancelar -->
-                            <x-buttonOscuro route="claseView">
+                            <x-buttonOscuro route="especialidadView">
                                 Cancelar
                             </x-buttonOscuro>
                         </div>
@@ -73,8 +58,8 @@
             </div>
         </div>
     </div>
-</x-app-layout>
 
+</x-app-layout>
 
 <script>
         @if ($errors->any())
@@ -89,3 +74,4 @@
             alertify.error("{{ session('error') }}");
         @endif
     </script>
+

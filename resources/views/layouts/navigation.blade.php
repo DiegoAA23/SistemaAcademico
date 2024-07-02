@@ -22,7 +22,8 @@
                 <!-- P & E -->
                 @if ($usuario == 3)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('registrarCalificaciones')" :active="request()->routeIs('registrarCalificaciones')">
+                    <x-nav-link :href="route('registrarCalificaciones')"
+                        :active="request()->routeIs('registrarCalificaciones')">
                         {{ __('Asignar Calificaciones') }}
                     </x-nav-link>
                 </div>
@@ -48,7 +49,8 @@
                 <!-- PROFESOR -->
                 @if ($usuario == 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('registrarCalificaciones')" :active="request()->routeIs('registrarCalificaciones')">
+                    <x-nav-link :href="route('registrarCalificaciones')"
+                        :active="request()->routeIs('registrarCalificaciones')">
                         {{ __('Asignar Calificaciones') }}
                     </x-nav-link>
                 </div>
@@ -85,6 +87,12 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('especialidadView')" :active="request()->routeIs('especialidadView')">
+                        {{ __('Especialidades') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('estudianteView')" :active="request()->routeIs('estudianteView')">
                         {{ __('Estudiantes') }}
                     </x-nav-link>
@@ -97,18 +105,25 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('aulaView')" :active="request()->routeIs('aulaView')">
+                        {{ __('Aulas') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('horarioView')" :active="request()->routeIs('horarioView')">
                         {{ __('Horarios') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('asignacionClasedocente')" :active="request()->routeIs('asignacionClasedocente')">
+                    <x-nav-link :href="route('asignacionClasedocente')"
+                        :active="request()->routeIs('asignacionClasedocente')">
                         {{ __('Asignar Clase Docente') }}
                     </x-nav-link>
                 </div>
                 @endif
-<!-- Settings Dropdown -->
+                <!-- Settings Dropdown -->
 
             </div>
 
@@ -183,9 +198,9 @@
 
             <div class="mt-3 space-y-1">
                 <!--Clases menu desplegable responsibe opcion-->
-              
 
-              
+
+
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">

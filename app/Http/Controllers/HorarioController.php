@@ -36,20 +36,18 @@ class HorarioController extends Controller
 
         return $pdf->download('horarios.pdf');
     }
-
-
     public function store(Request $request)
     {
         $request->validate([
             'id_curso' => 'required',
             'aula_id' => 'required',
-            'dias' => 'required|string|min:1|max:5',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date',
+            'dias' => ['required', 'string', 'min:1', 'max:6', 'regex:/^[LMMJVS]+$/'],
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
             'hora_inicio' => 'required',
-            'hora_fin' => 'required'
+            'hora_fin' => 'required|after:hora_inicio',
         ]);
-    
+
         try {
             Horario::create([
                 'id_curso' => $request->id_curso,
@@ -63,9 +61,8 @@ class HorarioController extends Controller
             ]);
 
             return redirect()->route('horarioView');
-            
         } catch (\Exception $e) {
-            dd($e->getMessage()); 
+            dd($e->getMessage());
         }
     }
 
@@ -77,8 +74,8 @@ class HorarioController extends Controller
     public function edit($id)
     {
         $horario = Horario::findOrFail($id);
-        $aulas = Aula::all(); 
-        $clases = Clase::all(); 
+        $aulas = Aula::all();
+        $clases = Clase::all();
         return view('horario.edit', compact('horario', 'aulas', 'clases'));
     }
 
@@ -87,21 +84,21 @@ class HorarioController extends Controller
         $request->validate([
             'id_curso' => 'required',
             'aula_id' => 'required',
-            'dias' => 'required|string|min:1|max:5',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date',
+            'dias' => ['required', 'string', 'min:1', 'max:6', 'regex:/^[LMMJVS]+$/'],
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
             'hora_inicio' => 'required',
-            'hora_fin' => 'required',
+            'hora_fin' => 'required|after:hora_inicio',
             'estado_id' => 'required|min:1|max:1'
         ]);
-    
+
         try {
             $horario = Horario::findOrFail($id);
             $horario->update($request->all());
-    
+
             return redirect()->route('horarioView');
         } catch (\Exception $e) {
-            dd($e->getMessage()); 
+            dd($e->getMessage());
         }
     }
 
@@ -109,14 +106,13 @@ class HorarioController extends Controller
     {
         try {
             $horario = Horario::findOrFail($id);
-    
-            if ($horario->estado_id == 1) { 
+
+            if ($horario->estado_id == 1) {
                 $horario->update(['estado_id' => 2]);
                 return redirect()->route('horarioView');
             } else {
                 return redirect()->route('horarioView');
             }
-            
         } catch (\Exception $e) {
             return redirect()->route('horarioView');
         }

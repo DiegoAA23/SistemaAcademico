@@ -9,6 +9,28 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-transparent dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black dark:text-black">
+
+                    @if ($errors->any())
+                        <div class="bg-red-500 text-white p-4 rounded mb-4">
+                            <strong>Atención:</strong> Por favor, corrija los siguientes errores:
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="bg-green-500 text-white p-4 rounded mb-4">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="bg-red-500 text-white p-4 rounded mb-4">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('horariosC.update', $horario->id_horario) }}">
                         @csrf
                         @method('PUT')
@@ -18,22 +40,24 @@
 
                             <div>
                                 <x-labelWhite for="id_curso" :value="'Curso:'" />
-                                <select id="id_curso" name="id_curso" required 
-                                class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                                    <option value="">Seleccione el Curso</option>
+                                <select id="id_curso" name="id_curso" required
+                                    class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
                                     @foreach($clases as $clase)
-                                        <option value="{{ $clase->id_curso }}" {{ $clase->id_curso == $clase->id_curso ? 'selected' : '' }}>{{ $clase->nombre_clase }}</option>
+                                        <option value="{{ $clase->id_curso }}" {{ old('id_curso', $clase->id_curso) == $clase->id_curso ? 'selected' : '' }}>
+                                            {{ $clase->nombre_clase }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div>
                                 <x-labelWhite for="aula_id" :value="'Aula:'" />
-                                <select id="aula_id" name="aula_id" required 
-                                class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                                    <option value="">Seleccione el Aula</option>
+                                <select id="aula_id" name="aula_id" required
+                                    class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
                                     @foreach($aulas as $aula)
-                                        <option value="{{ $aula->id_aula }}" {{ $aula->id_aula == $aula->id_aula ? 'selected' : '' }}>{{ $aula->aula }}</option>
+                                        <option value="{{ $aula->id_aula }}" {{ old('aula_id', $aula->id_aula) == $aula->id_aula ? 'selected' : '' }}>
+                                            {{ $aula->aula }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -66,7 +90,7 @@
 
 
                             <div>
-                                <x-labelWhite for="dias" :value="'Días:'" />
+                                <x-labelWhite for="dias" :value="'Días(LMMJVS):'" />
                                 <x-inputWhite class="block mt-1 w-full" type="text" name="dias" value="{{ old('dias', $horario->dias) }}" required maxlength="5" minlength="1" autofocus />
                             </div>
 
