@@ -39,8 +39,6 @@
                                 Asignar Clase
                             </x-buttonWhite>
                         </div>
-
-
                     </form>
                 </div>
             </div>

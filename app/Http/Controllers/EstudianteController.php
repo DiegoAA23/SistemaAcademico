@@ -6,6 +6,7 @@ use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use App\Models\Estado;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 use PDF;
 
 class EstudianteController extends Controller
@@ -66,6 +67,28 @@ class EstudianteController extends Controller
                 'correo_electronico' => $request->correo_electronico,
                 'estado_id' => 1,
             ]);
+
+            $user = User::where('id_profesor', $request->id_estudiante)->first();
+
+            if ($user) {
+                // Verificar si el correo electrónico coincide
+                if ($user->email !== $request->correo_electronico) {
+                    throw new \Exception('El correo electrónico no coincide con el del usuario existente.');
+                }
+
+                // Actualizar el usuario existente
+                $user->update([
+                    'id_estudiante' => $request->id_estudiante
+                ]);
+            } else {
+                // Crear nuevo usuario
+                $user = User::create([
+                    'name' => $request->nombre . ' ' . $request->apellido,
+                    'email' => $request->correo_electronico,
+                    'password' => bcrypt(strtolower($request->correo_electronico)),
+                    'id_estudiante' => $request->id_estudiante
+                ]);
+            }
         } catch (\Exception $e) {
             dd($e->getMessage());
         }

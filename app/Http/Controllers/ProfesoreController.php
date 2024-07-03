@@ -7,6 +7,7 @@ use App\Models\Profesore;
 use App\Models\Estado;
 use App\Models\Especialidad;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 use PDF;
 
 class ProfesoreController extends Controller
@@ -61,6 +62,23 @@ class ProfesoreController extends Controller
                 'telefono' => $request->telefono,
                 'estado_id' => 1,
             ]);
+
+            $user = User::where('id_estudiante', $request->id_profesor)->first();
+
+            if ($user) {
+                // Actualizar el usuario existente
+                $user->update([
+                    'id_profesor' => $request->id_profesor,
+                ]);
+            } else {
+                // Crear nuevo usuario
+                $user = User::create([
+                    'name' => $request->nombre . ' ' . $request->apellido,
+                    'email' => $request->correo_electronico,
+                    'password' => bcrypt(strtolower($request->correo_electronico)), 
+                    'id_profesor' => $request->id_profesor,
+                ]);
+            }
         } catch (\Exception $e) {
             dd($e->getMessage()); // Muestra el mensaje de error para diagnóstico
         }

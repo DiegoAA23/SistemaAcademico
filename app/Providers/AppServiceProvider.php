@@ -27,22 +27,42 @@ class AppServiceProvider extends ServiceProvider
             $usuario = Auth::user();
             $tipo = 0;
 
-            if($usuario) {
-                if($usuario->id_estudiante !== null && $usuario->id_profesor !== null){
+            if ($usuario) {
+                if ($usuario->id_estudiante !== null && $usuario->id_profesor !== null) {
                     $tipo = 3;
-                } else if($usuario->id_profesor !== null){
+                } else if ($usuario->id_profesor !== null) {
                     $tipo = 2;
-                } else if($usuario->id_estudiante !== null){
+                } else if ($usuario->id_estudiante !== null) {
                     $tipo = 1;
                 }
             }
 
             $view->with('usuario', $tipo);
+            $view->with('idest',);
         });
 
         View::composer('*', function ($view) {
             if (!isset($view->periodo)) {
                 $view->with('periodo', 0);
+            }
+        });
+
+        View::composer('*', function ($view) {
+            $lista = DB::table('clases_horarios')->get();
+
+            $view->with('lista', $lista);
+        });
+
+        View::composer('*', function ($view) {
+            if ($estudianteActual = Auth::user()) {
+                $tmpEstud = $estudianteActual->id_estudiante;
+                if($tmpEstud){
+                    $estudiante = DB::table('estudiantes')->where('id_estudiante', $tmpEstud)->first();
+                    $idest = $estudiante->id_estudiante;
+                    $view->with('idest', $idest);
+                }else{
+                    //h
+                }
             }
         });
     }

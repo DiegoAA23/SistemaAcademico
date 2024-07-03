@@ -11,6 +11,7 @@ use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\AulaController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\NivelesUsuario;
+use App\Http\Controllers\PeriodoController;
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -71,6 +72,7 @@ Route::middleware('auth')->group(function () {
 
     //RUTAS DE MATRICULAS ESTUD
     Route::get('matricula', [EstudianteNotas::class, 'index'])->name('matricula');
+    Route::resource('matriculaC', PeriodoController::class);
 
     //RUTAS DE PROFESOR
     Route::get('/profesor/profesorView', [ProfesoreController::class, 'index'])->name('profesorView');

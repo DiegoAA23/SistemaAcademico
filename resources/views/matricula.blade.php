@@ -68,7 +68,6 @@
 
     <script>
         function matricularClases(periodo) {
-            // Aquí puedes realizar una redirección utilizando JavaScript con el valor del período
             window.location.href = "{{ route('matricularClases') }}" + "?periodo=" + periodo;
         }
     </script>

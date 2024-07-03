@@ -60,7 +60,7 @@
                                 <x-labelWhite for="genero" :value="'Género:'" />
                                 <select name="genero" id="genero" 
                                 class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                                
+
                                     <option value="Femenino">Femenino</option>
                                     <option value="Masculino">Masculino</option>
                                 </select>

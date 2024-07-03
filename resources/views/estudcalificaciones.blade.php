@@ -10,9 +10,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-md mx-4">
+                    @if (!$item->isEmpty())
                     <x-buttonWhite class="ml-3 mb-6 mt-6">
                         <a href="/imprimir-notas">DESCARGAR BOLETA</a>
                     </x-buttonWhite>
+                    @endif
                     <div class="w-full max-w-5xl bg-gray-800 p-8 rounded-lg shadow-md mx-4 border border-gray-700">
                         <div class="p-6 bg-gray-800 rounded-lg">
                             <div class="container mx-auto p-8">
@@ -33,7 +35,9 @@
                                         <div class="bg-white rounded-lg shadow p-6">
                                             <h2 class="text-lg font-semibold mb-2">{{ $it->nombre_clase }}</h2>
                                             <p><strong>Profesor: {{ $it->nombre_profesor }} {{ $it->apellido_profesor }}</strong></p>
-                                            <p><strong>Nota: {{ $it->nota }}</strong></p>
+                                            <p><strong>Nota: @if ($it->nota == 0.0)
+                                                N.A.
+                                            @else{{ $it->nota }}@endif</strong></p>
                                         </div>
                                         @php $cont++; @endphp
                                     @endforeach

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Matricula;
 use PDF;
 
 class EstudianteNotas extends Controller
@@ -32,7 +33,9 @@ class EstudianteNotas extends Controller
     private $idest;
     public function obtenerEstudiante()
     {
-        $estudiante = DB::table('estudiantes')->where('id_estudiante', 2)->first();
+        $estudianteActual = Auth::user();
+        $tmpEstud = $estudianteActual->id_estudiante;
+        $estudiante = DB::table('estudiantes')->where('id_estudiante', $tmpEstud)->first();
 
         if (!$estudiante) {
             return redirect()->back()->with('error', 'No se encontró ningún estudiante.');
@@ -58,7 +61,7 @@ class EstudianteNotas extends Controller
 
         $item = DB::table('notas')->where('id_estudiante', $id_estudiante)->get();
 
-        $pdf = PDF::loadView('estudCalificaciones', ['item' => $item]);
+        $pdf = PDF::loadView('estudCalificaciones', ['item' => $item])->setPaper('a3');
 
         return $pdf->download('notas.pdf');
     }
@@ -77,14 +80,16 @@ class EstudianteNotas extends Controller
 
         $item = DB::table('notas_periodo')->where('id_estudiante', $id_estudiante)->get();
 
-        $pdf = PDF::loadView('historial', ['item' => $item]);
+        $pdf = PDF::loadView('historial', ['item' => $item])->setPaper('a3');
 
         return $pdf->download('historial.pdf');
     }
 
     public function obtenerEstudiante2()
     {
-        $estudiante = DB::table('estudiantes')->where('id_estudiante', 2)->first();
+        $estudianteActual = Auth::user();
+        $tmpEstud = $estudianteActual->id_estudiante;
+        $estudiante = DB::table('estudiantes')->where('id_estudiante', $tmpEstud)->first();
 
         if (!$estudiante) {
             return redirect()->back()->with('error', 'No se encontró ningún estudiante.');
