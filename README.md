@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SistemaAcademico
 
 Sistema Academico con PHP + Laravel; web app.
