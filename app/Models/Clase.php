@@ -33,4 +33,9 @@ class Clase extends Model
     {
         return $this->belongsTo(Estado::class, 'id_curso');
     }
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class, 'id_curso');
+    }
 }

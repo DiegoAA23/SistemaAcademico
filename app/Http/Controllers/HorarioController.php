@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Estado;
 use App\Models\Clase;
 use App\Models\Aula;
-use PDF;
+use Barryvdh\DomPDF\Facade\PDF;
 
 
 class HorarioController extends Controller

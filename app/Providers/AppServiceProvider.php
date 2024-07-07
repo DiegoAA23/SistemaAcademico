@@ -64,6 +64,19 @@ class AppServiceProvider extends ServiceProvider
                     //h
                 }
             }
+
+            View::composer('*', function ($view) {
+                if ($profesorActual = Auth::user()) {
+                    $tmpProfe = $profesorActual->id_profesor;
+                    if($tmpProfe){
+                        $profesor = DB::table('profesores')->where('id_profesor', $tmpProfe)->first();
+                        $idprof = $profesor->id_profesor;
+                        $view->with('idprof', $idprof);
+                    }else{
+                        //h
+                    }
+                }
+            });
         });
     }
 }

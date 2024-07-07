@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Profesore;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Estado;
-use PDF;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class ClasesController extends Controller
 {
@@ -37,33 +37,6 @@ class ClasesController extends Controller
 
     public function store(Request $request)
     {
-        /*$request->validate([
-            'nombre_clase' => [
-            'required',
-            'string',
-            'min:3',
-            'max:50',
-            'unique:cursos,nombre_clase',
-            'regex:/^[\pL\s]+$/u'
-            ],
-            'id_profesor' => 'required',
-            'periodo' => 'required|min:1|max:2'
-        ]);
-
-        try {
-            Clase::create([
-                'nombre_clase' => $request->nombre_clase,
-                'id_profesor' => $request->id_profesor,
-                'periodo' => $request->periodo,
-                'estado_id' => 1,
-            ]);
-
-            return redirect()->route('claseView');
-
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }*/
-
         $validator = Validator::make($request->all(), [
             'nombre_clase' => [
                 'required',
@@ -118,29 +91,6 @@ class ClasesController extends Controller
 
     public function update(Request $request, $id)
     {
-        /*$request->validate([
-            'nombre_clase' => [
-            'required',
-            'string',
-            'min:3',
-            'max:50',
-            'unique:cursos,nombre_clase,' . $id . ',id_curso',
-            'regex:/^[\pL\s]+$/u'
-            ],
-            'id_profesor' => 'required',
-            'periodo' => 'required|min:1|max:2',
-            'estado_id' => 'required|min:1|max:1'
-        ]);
-
-        try {
-            $clase = Clase::findOrFail($id);
-            $clase->update($request->all());
-
-            return redirect()->route('claseView');
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }*/
-
         $validator = Validator::make($request->all(), [
             'nombre_clase' => [
                 'required',

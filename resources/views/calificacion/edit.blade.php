@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Ingresar Cursos') }}
+            {{ __('Editar Calificación') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
             <div class="bg-transparent dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black dark:text-black">
 
-                @if ($errors->any())
+                    @if ($errors->any())
                         <div class="bg-red-500 text-white p-4 rounded mb-4">
                             <strong>Atención:</strong> Por favor, corrija los siguientes errores:
                             <ul>
@@ -31,43 +31,39 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('clasesC.store') }}">
+                    <form method="POST" action="{{ route('calificacionesC.update', $calificacion->id_calificacion) }}">
                         @csrf
+                        @method('PUT')
                         <div class="grid grid-cols-2 gap-6">
                             <div>
-                                <x-labelWhite for="nombre_clase" :value="'Clase:'" />
-                                <x-inputWhite class="block mt-1 w-full" type="text" name="nombre_clase" value="{{ old('nombre_clase') }}" required maxlength="50" minlength="4" autofocus />
-                            </div>
-
-                            <div>
-                                <x-labelWhite for="id_profesor" :value="'Profesor:'" />
-                                <select id="id_profesor" name="id_profesor" required
+                                <x-labelWhite for="id_inscripcion" :value="'Inscripción:'" />
+                                <select id="id_inscripcion" name="id_inscripcion" required disabled
                                     class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                                    @foreach($profesores as $profesor)
-                                        <option value="{{ $profesor->id_profesor }}" {{ old('id_profesor') == $profesor->id_profesor ? 'selected' : '' }}>
-                                            {{ $profesor->nombre }} {{ $profesor->apellido }}
+                                    @foreach ($claseProfe as $inscripcion)
+                                        <option value="{{ $inscripcion->id_inscripcion }}" {{ $calificacion->id_inscripcion == $inscripcion->id_inscripcion ? 'selected' : '' }}>
+                                            {{ $inscripcion->nombre_clase }} - {{ $inscripcion->nombre }} {{ $inscripcion->apellido }}
                                         </option>
                                     @endforeach
                                 </select>
+                                <input type="hidden" name="id_inscripcion" value="{{ $calificacion->id_inscripcion }}">
                             </div>
 
                             <div>
-                                <x-labelWhite for="periodo" :value="'Periodo:'" />
-                                <x-inputWhite class="block mt-1 w-full" min=1 type="number" name="periodo" value="{{ old('periodo') }}" required autofocus />
+                                <x-labelWhite for="nota" :value="'Nota:'" />
+                                <x-inputWhite class="block mt-1 w-full" type="number" name="nota" value="{{ $calificacion->nota }}" min=0 max="100" required />
                             </div>
-                        </div>
+                        </div>  
 
                         <div class="flex items-center justify-end mt-4">
                             <x-buttonWhite type="submit">
-                                Registrar
+                                Actualizar
                             </x-buttonWhite>
                             <pre> </pre>
                             <!-- Botón de cancelar -->
-                            <x-buttonOscuro route="claseView">
+                            <x-buttonOscuro route="calificacionView">
                                 Cancelar
                             </x-buttonOscuro>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -75,17 +71,16 @@
     </div>
 </x-app-layout>
 
-
 <script>
-        @if ($errors->any())
-            alertify.alert("Atención", "Por favor, corrija los siguientes errores:<br><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>");
-        @endif
+    @if ($errors->any())
+        alertify.alert("Atención", "Por favor, corrija los siguientes errores:<br><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>");
+    @endif
 
-        @if (session('success'))
-            alertify.success("{{ session('success') }}");
-        @endif
+    @if (session('success'))
+        alertify.success("{{ session('success') }}");
+    @endif
 
-        @if (session('error'))
-            alertify.error("{{ session('error') }}");
-        @endif
-    </script>
+    @if (session('error'))
+        alertify.error("{{ session('error') }}");
+    @endif
+</script>

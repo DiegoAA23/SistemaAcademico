@@ -33,4 +33,9 @@ class Profesore extends Model
     {
         return $this->belongsTo(Especialidad::class, 'id_especialidad');
     }
+
+    public function clases()
+    {
+        return $this->hasMany(Clase::class, 'id_profesor');
+    }
 }

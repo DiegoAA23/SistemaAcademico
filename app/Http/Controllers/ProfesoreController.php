@@ -8,7 +8,7 @@ use App\Models\Estado;
 use App\Models\Especialidad;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use PDF;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class ProfesoreController extends Controller
 {
@@ -41,7 +41,11 @@ class ProfesoreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_profesor' => 'required|min:13|max:15|unique:profesores,id_profesor',
+            'id_profesor' => [
+                'required',
+                'unique:profesores,id_profesor',
+                'regex:/^[0-1][0-8](0[1-9]|1[0-9]|2[0-8])(19\d{2}|200\d|2010)\d{5}$/'
+            ],
             'nombre' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s]+$/u'],
             'apellido' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s]+$/u'],
             'id_especialidad' => 'required',

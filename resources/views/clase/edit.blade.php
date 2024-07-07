@@ -30,7 +30,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    
+
                     <form method="POST" action="{{ route('clasesC.update', $clase->id_curso) }}">
                         @csrf
                         @method('PUT')
@@ -58,7 +58,7 @@
 
                             <div>
                                 <x-labelWhite for="periodo" :value="'Periodo:'" />
-                                <x-inputWhite class="block mt-1 w-full" type="number" name="periodo"
+                                <x-inputWhite class="block mt-1 w-full" type="number" name="periodo" min=1
                                     value="{{ old('periodo', $clase->periodo) }}" required maxlength="50"
                                     minlength="3" autofocus />
                             </div>

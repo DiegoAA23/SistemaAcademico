@@ -12,6 +12,7 @@ use App\Http\Controllers\AulaController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\NivelesUsuario;
 use App\Http\Controllers\PeriodoController;
+use App\Http\Controllers\CalificacionController;
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -92,22 +93,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/especialidad/edit/{id}', [EspecialidadController::class, 'edit'])->name('especialidadEdit');
     Route::resource('especialidadesC', EspecialidadController::class);
 
-
     //RUTAS ASIGNACION CLASES
     Route::get('asignacionClasedocente', [EstudianteNotas::class, 'clases_profesores'])->name('asignacionClasedocente');
 
     //RUTAS ASIGNACION CALIFICACIONES
-    Route::get('registrarCalificaciones', [EstudianteNotas::class, 'calificaciones'])->name('registrarCalificaciones');
+    Route::get('/calificacion/calificacionView', [CalificacionController::class, 'index'])->name('calificacionView');
+    Route::get('/calificacion/create', [CalificacionController::class, 'create'])->name('calificacionCreate');
+    Route::get('/calificacion/edit/{id}', [CalificacionController::class, 'edit'])->name('calificacionEdit');
+    Route::resource('calificacionesC', CalificacionController::class);
 
     //RUTAS MATRICULAR CLASES
-    //Route::view('matricularClases', 'matricularClases')->name('matricularClases');
     Route::get('matricularClases', [EstudianteController::class, 'matricularClases'])->name('matricularClases');
     Route::post('/matricula', [EstudianteController::class, 'registrarMatricula'])->name('matricula');
+
+
 
     //RUTAS ANTIGUAS
     //Route::view('clases', 'clases')->name('clases');
     //Route::get('horarios', [EstudianteNotas::class, 'clases'])->name('horarios');
-
     //Route::get('asignacionClasedocente', [EstudianteNotas::class, 'clases'])->name('asignacionClasedocente');
     //Route::get('estudcalificaciones/{id}', [EstudianteNotas::class, 'notas'])->name('estudcalificaciones.id');
     //Route::get('historial/{id}', [EstudianteNotas::class, 'notas_periodo'])->name('historial.id');
@@ -117,7 +120,7 @@ Route::middleware('auth')->group(function () {
     //Route::view('profesores', 'profesores')->name('profesores');
     //Route::view('estudiantes', 'estudiantes')->name('estudiantes');
     //Route::view('asignacionClasedocente', 'asignacionClasedocente')->name('asignacionClasedocente');
-   //Route::view('horarios', 'horarios')->name('horarios');
+    //Route::view('horarios', 'horarios')->name('horarios');
     //Route::view('registrarCalificaciones', 'registrarCalificaciones')->name('registrarCalificaciones');
     //Route::get('clases', [EstudianteNotas::class, 'profesores'])->name('clases');
     //Route::put('/clases', [ClasesController::class, 'store'])->name('clases.registrar');

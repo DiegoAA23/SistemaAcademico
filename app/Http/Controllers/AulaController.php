@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Aula;
 use Illuminate\Http\Request;
 use App\Models\Estado;
-use PDF;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class AulaController extends Controller
 {
