@@ -1,34 +1,4 @@
-# SistemaAcademico
 
-Sistema Academico con PHP + Laravel; web app.
-
-Seguridad Informatica - II Periodo 2024
-
-*****Instrucciones para ejecutar:*****
-
-Necesario instalar:
-- Laravel
-- Composer
-- NodeJS
-- XAMPP
-
-////////////////////////////////////////////////////////////////
-
-**Ejecutar los comandos en el directorio:
-
-- composer update
-- php artisan migrate
-- php artisan key:generate
-- php artisan db:seed
-
-////////////////////////////////////////////////////////////////
-
-**Para abrir el servidor:
-
-- php artisan serve
-
-*Crear nuevo usuario para ingresar
-=======================================
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
