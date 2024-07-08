@@ -11,24 +11,24 @@
                 <div class="p-6 text-black dark:text-black">
 
                     @if ($errors->any())
-                        <div class="bg-red-500 text-white p-4 rounded mb-4">
-                            <strong>Atención:</strong> Por favor, corrija los siguientes errores:
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    <div class="bg-red-500 text-white p-4 rounded mb-4">
+                        <strong>Atención:</strong> Por favor, corrija los siguientes errores:
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @endif
                     @if (session('success'))
-                        <div class="bg-green-500 text-white p-4 rounded mb-4">
-                            {{ session('success') }}
-                        </div>
+                    <div class="bg-green-500 text-white p-4 rounded mb-4">
+                        {{ session('success') }}
+                    </div>
                     @endif
                     @if (session('error'))
-                        <div class="bg-red-500 text-white p-4 rounded mb-4">
-                            {{ session('error') }}
-                        </div>
+                    <div class="bg-red-500 text-white p-4 rounded mb-4">
+                        {{ session('error') }}
+                    </div>
                     @endif
 
                     <form method="POST" action="{{ route('calificacionesC.store') }}">
@@ -37,20 +37,22 @@
                             <div>
                                 <x-labelWhite for="id_inscripcion" :value="'Inscripción:'" />
                                 <select id="id_inscripcion" name="id_inscripcion" required
-                                    class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
+                                    class="shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
                                     @foreach ($claseProfe as $claseP)
-                                        <option value="{{ $claseP->id_inscripcion }}" {{ old('id_inscripcion') == $claseP->id_inscripcion ? 'selected' : '' }}>
-                                            {{ $claseP->nombre_clase }} - {{ $claseP->nombre }} {{ $claseP->apellido }}
-                                        </option>
+                                    <option value="{{ $claseP->id_inscripcion }}" {{ old('id_inscripcion')==$claseP->
+                                        id_inscripcion ? 'selected' : '' }}>
+                                        {{ $claseP->nombre_clase }} - {{ $claseP->nombre }} {{ $claseP->apellido }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div>
                                 <x-labelWhite for="nota" :value="'Nota:'" />
-                                <x-inputWhite class="block mt-1 w-full" type="number" name="nota" value="{{ old('nota') }}" min=0 max="100" required />
+                                <x-inputWhite class="block mt-1 w-full" type="number" name="nota"
+                                    value="{{ old('nota') }}" min=0 max="100" required />
                             </div>
-                        </div>  
+                        </div>
 
                         <div class="flex items-center justify-end mt-4">
                             <x-buttonWhite type="submit">

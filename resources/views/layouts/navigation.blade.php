@@ -22,8 +22,7 @@
                 <!-- P & E -->
                 @if ($usuario == 3)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('registrarCalificaciones')"
-                        :active="request()->routeIs('registrarCalificaciones')">
+                    <x-nav-link :href="route('calificacionView')" :active="request()->routeIs('calificacionView')">
                         {{ __('Asignar Calificaciones') }}
                     </x-nav-link>
                 </div>

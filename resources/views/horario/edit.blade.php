@@ -61,7 +61,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
+
 
                             <div>
                                 <label for="fecha_inicio" class="block text-sm font-medium text-white">Fecha de Inicio:</label>
@@ -97,7 +97,7 @@
                             <div>
                                 <x-labelWhite for="estado" :value="'Estado:'" />
                                 <select name="estado_id" id="estado_id"
-                                class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
+                                 class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
                                     <option value="1" {{ $horario->estado_id == 1 ? 'selected' : '' }}>Activo
                                     </option>
                                     <option value="2" {{ $horario->estado_id == 2 ? 'selected' : '' }}>Inactivo
@@ -123,7 +123,7 @@
         </div>
     </div>
 
-    
+
     </x-app-layout>
 
     <script>
