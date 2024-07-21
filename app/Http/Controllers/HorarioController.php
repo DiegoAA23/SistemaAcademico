@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Horario;
+use App\Models\HorarioVal;
 use Illuminate\Http\Request;
 use App\Models\Estado;
 use App\Models\Clase;
 use App\Models\Aula;
 use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Validation\ValidationException;
 
 
 class HorarioController extends Controller
@@ -47,6 +49,55 @@ class HorarioController extends Controller
             'hora_inicio' => 'required',
             'hora_fin' => 'required|after:hora_inicio',
         ]);
+
+
+        // Verificar aula
+        $conflictingAulas = HorarioVal::where('aula_id', $request->aula_id)
+            ->where(function ($query) use ($request) {
+                $query->where(function ($query) use ($request) {
+                    $query->whereBetween('fecha_inicio', [$request->fecha_inicio, $request->fecha_fin])
+                        ->orWhereBetween('fecha_fin', [$request->fecha_inicio, $request->fecha_fin])
+                        ->orWhereRaw('? BETWEEN fecha_inicio AND fecha_fin', [$request->fecha_inicio])
+                        ->orWhereRaw('? BETWEEN fecha_inicio AND fecha_fin', [$request->fecha_fin]);
+                })->where(function ($query) use ($request) {
+                    $query->whereBetween('hora_inicio', [$request->hora_inicio, $request->hora_fin])
+                        ->orWhereBetween('hora_fin', [$request->hora_inicio, $request->hora_fin])
+                        ->orWhereRaw('? BETWEEN hora_inicio AND hora_fin', [$request->hora_inicio])
+                        ->orWhereRaw('? BETWEEN hora_inicio AND hora_fin', [$request->hora_fin]);
+                });
+            })
+            ->get();
+
+        foreach ($conflictingAulas as $conflict) {
+            if ($this->hasDayConflict($conflict->dias, $request->dias)) {
+                throw ValidationException::withMessages(['aula_id' => 'The classroom is already occupied at the indicated time and dates.']);
+            }
+        }
+
+        // Verificar profesor
+        $curso = Clase::findOrFail($request->id_curso);
+        $conflictingProfesor = HorarioVal::where('id_profesor', $curso->id_profesor)
+            ->where(function ($query) use ($request) {
+                $query->where(function ($query) use ($request) {
+                    $query->whereBetween('fecha_inicio', [$request->fecha_inicio, $request->fecha_fin])
+                        ->orWhereBetween('fecha_fin', [$request->fecha_inicio, $request->fecha_fin])
+                        ->orWhereRaw('? BETWEEN fecha_inicio AND fecha_fin', [$request->fecha_inicio])
+                        ->orWhereRaw('? BETWEEN fecha_inicio AND fecha_fin', [$request->fecha_fin]);
+                })->where(function ($query) use ($request) {
+                    $query->whereBetween('hora_inicio', [$request->hora_inicio, $request->hora_fin])
+                        ->orWhereBetween('hora_fin', [$request->hora_inicio, $request->hora_fin])
+                        ->orWhereRaw('? BETWEEN hora_inicio AND hora_fin', [$request->hora_inicio])
+                        ->orWhereRaw('? BETWEEN hora_inicio AND hora_fin', [$request->hora_fin]);
+                });
+            })
+            ->get();
+
+        foreach ($conflictingProfesor as $conflict) {
+            if ($this->hasDayConflict($conflict->dias, $request->dias)) {
+                throw ValidationException::withMessages(['id_curso' => 'The teacher is already occupied at the indicated time and dates.']);
+            }
+        }
+
 
         try {
             Horario::create([
@@ -92,6 +143,56 @@ class HorarioController extends Controller
             'estado_id' => 'required|min:1|max:1'
         ]);
 
+
+        // Verificar aula
+        $conflictingAulas = HorarioVal::where('aula_id', $request->aula_id)
+            ->where(function ($query) use ($request) {
+                $query->where(function ($query) use ($request) {
+                    $query->whereBetween('fecha_inicio', [$request->fecha_inicio, $request->fecha_fin])
+                        ->orWhereBetween('fecha_fin', [$request->fecha_inicio, $request->fecha_fin])
+                        ->orWhereRaw('? BETWEEN fecha_inicio AND fecha_fin', [$request->fecha_inicio])
+                        ->orWhereRaw('? BETWEEN fecha_inicio AND fecha_fin', [$request->fecha_fin]);
+                })->where(function ($query) use ($request) {
+                    $query->whereBetween('hora_inicio', [$request->hora_inicio, $request->hora_fin])
+                        ->orWhereBetween('hora_fin', [$request->hora_inicio, $request->hora_fin])
+                        ->orWhereRaw('? BETWEEN hora_inicio AND hora_fin', [$request->hora_inicio])
+                        ->orWhereRaw('? BETWEEN hora_inicio AND hora_fin', [$request->hora_fin]);
+                });
+            })
+            ->get();
+
+        foreach ($conflictingAulas as $conflict) {
+            if ($this->hasDayConflict($conflict->dias, $request->dias)) {
+                throw ValidationException::withMessages(['aula_id' => 'The classroom is already occupied at the indicated time and dates.']);
+            }
+        }
+
+        // Verificar profesor
+        $curso = Clase::findOrFail($request->id_curso);
+        $conflictingProfesor = HorarioVal::where('id_profesor', $curso->id_profesor)
+            ->where(function ($query) use ($request) {
+                $query->where(function ($query) use ($request) {
+                    $query->whereBetween('fecha_inicio', [$request->fecha_inicio, $request->fecha_fin])
+                        ->orWhereBetween('fecha_fin', [$request->fecha_inicio, $request->fecha_fin])
+                        ->orWhereRaw('? BETWEEN fecha_inicio AND fecha_fin', [$request->fecha_inicio])
+                        ->orWhereRaw('? BETWEEN fecha_inicio AND fecha_fin', [$request->fecha_fin]);
+                })->where(function ($query) use ($request) {
+                    $query->whereBetween('hora_inicio', [$request->hora_inicio, $request->hora_fin])
+                        ->orWhereBetween('hora_fin', [$request->hora_inicio, $request->hora_fin])
+                        ->orWhereRaw('? BETWEEN hora_inicio AND hora_fin', [$request->hora_inicio])
+                        ->orWhereRaw('? BETWEEN hora_inicio AND hora_fin', [$request->hora_fin]);
+                });
+            })
+            ->get();
+
+        foreach ($conflictingProfesor as $conflict) {
+            if ($this->hasDayConflict($conflict->dias, $request->dias)) {
+                throw ValidationException::withMessages(['id_curso' => 'The teacher is already occupied at the indicated time and dates.']);
+            }
+        }
+
+
+
         try {
             $horario = Horario::findOrFail($id);
             $horario->update($request->all());
@@ -116,5 +217,18 @@ class HorarioController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('horarioView');
         }
+    }
+
+    private function hasDayConflict($days1, $days2)
+    {
+        $daysArray1 = str_split($days1);
+        $daysArray2 = str_split($days2);
+
+        foreach ($daysArray1 as $day) {
+            if (in_array($day, $daysArray2)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -19,15 +19,6 @@ class AulaController extends Controller
         $this->idest = $aulas;
         return view('aula.aulaView', compact('aulas'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('aula.create');
-    }
-
     public function imprimirAulas()
     {
         $this->index();
@@ -37,13 +28,20 @@ class AulaController extends Controller
 
         return $pdf->download('aulas.pdf');
     }
+    public function create()
+    {
+        return view('aula.create');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'aula' => 'required|min:3|max:4',
+            'aula' => 'required|min:3|max:4|unique:aulas,aula',
+        ], [
+            'aula.unique' => 'El aula ya está ingresada.',
         ]);
 
         try {
@@ -82,7 +80,7 @@ class AulaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'aula' => 'required|min:3|max:4',
+            'aula' => 'required|min:3|max:4|unique:aulas,aula,' . $id . ',id_aula',
             'estado_id' => 'required|min:1|max:1'
         ]);
 

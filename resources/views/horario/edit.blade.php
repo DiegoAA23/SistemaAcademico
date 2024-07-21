@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mt-6">
             {{ __('Actualizar Horario') }}
         </h2>
     </x-slot>
@@ -36,14 +36,12 @@
                         @method('PUT')
 
                         <div class="grid grid-cols-2 gap-6">
-
-
                             <div>
                                 <x-labelWhite for="id_curso" :value="'Curso:'" />
                                 <select id="id_curso" name="id_curso" required
                                     class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
                                     @foreach($clases as $clase)
-                                        <option value="{{ $clase->id_curso }}" {{ old('id_curso', $clase->id_curso) == $clase->id_curso ? 'selected' : '' }}>
+                                        <option value="{{ $clase->id_curso }}" {{ (old('id_curso', $horario->id_curso) == $clase->id_curso) ? 'selected' : '' }}>
                                             {{ $clase->nombre_clase }}
                                         </option>
                                     @endforeach
@@ -55,39 +53,36 @@
                                 <select id="aula_id" name="aula_id" required
                                     class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
                                     @foreach($aulas as $aula)
-                                        <option value="{{ $aula->id_aula }}" {{ old('aula_id', $aula->id_aula) == $aula->id_aula ? 'selected' : '' }}>
+                                        <option value="{{ $aula->id_aula }}" {{ (old('aula_id', $horario->aula_id) == $aula->id_aula) ? 'selected' : '' }}>
                                             {{ $aula->aula }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
-
                             <div>
                                 <label for="fecha_inicio" class="block text-sm font-medium text-white">Fecha de Inicio:</label>
                                 <input id="fecha_inicio" name="fecha_inicio" type="date" value="{{ old('fecha_inicio', $horario->fecha_inicio) }}" required 
                                 class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                                </div>
+                            </div>
 
                             <div>
                              <label for="hora_inicio" class="block text-sm font-medium text-white">Hora de Inicio:</label>
                              <input id="hora_inicio" name="hora_inicio" type="time" value="{{ old('hora_inicio', $horario->hora_inicio) }}" required 
                              class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                             </div>
-
+                            </div>
 
                             <div>
                                 <label for="fecha_fin" class="block text-sm font-medium text-white">Fecha de Fin:</label>
                                 <input id="fecha_fin" name="fecha_fin" type="date" value="{{ old('fecha_fin', $horario->fecha_fin) }}" required 
                                 class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                                </div>
+                            </div>
 
                             <div>
                              <label for="hora_fin" class="block text-sm font-medium text-white">Hora de Fin:</label>
                              <input id="hora_fin" name="hora_fin" type="time" value="{{ old('hora_fin', $horario->hora_fin) }}" required 
                              class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                             </div>
-
+                            </div>
 
                             <div>
                                 <x-labelWhite for="dias" :value="'Días(LMMJVS):'" />
@@ -97,10 +92,10 @@
                             <div>
                                 <x-labelWhite for="estado" :value="'Estado:'" />
                                 <select name="estado_id" id="estado_id"
-                                 class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
-                                    <option value="1" {{ $horario->estado_id == 1 ? 'selected' : '' }}>Activo
+                                class="rounded-md shadow-sm block mt-1 w-full rounded-lg border border-white-300 dark:border-white-600 focus:outline-none focus:border-white focus:ring-white focus:ring-opacity-50 dark:focus:border-gray-400">
+                                    <option value="1" {{ (old('estado_id', $horario->estado_id) == 1) ? 'selected' : '' }}>Activo
                                     </option>
-                                    <option value="2" {{ $horario->estado_id == 2 ? 'selected' : '' }}>Inactivo
+                                    <option value="2" {{ (old('estado_id', $horario->estado_id) == 2) ? 'selected' : '' }}>Inactivo
                                     </option>
                                 </select>
                             </div>
@@ -122,20 +117,18 @@
             </div>
         </div>
     </div>
+</x-app-layout>
 
+<script>
+    @if ($errors->any())
+        alertify.alert("Atención", "Por favor, corrija los siguientes errores:<br><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>");
+    @endif
 
-    </x-app-layout>
+    @if (session('success'))
+        alertify.success("{{ session('success') }}");
+    @endif
 
-    <script>
-        @if ($errors->any())
-            alertify.alert("Atención", "Por favor, corrija los siguientes errores:<br><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>");
-        @endif
-
-        @if (session('success'))
-            alertify.success("{{ session('success') }}");
-        @endif
-
-        @if (session('error'))
-            alertify.error("{{ session('error') }}");
-        @endif
-    </script>
+    @if (session('error'))
+        alertify.error("{{ session('error') }}");
+    @endif
+</script>
